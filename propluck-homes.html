@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropLuck Homes — Lucknow Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy2: #1B2F45;
+    --teal: #0E7C6E;
+    --teal-light: #E8F5F3;
+    --gold: #C49A3C;
+    --gold-light: #FBF5E6;
+    --cream: #F8F6F2;
+    --dark: #0D1B2A;
+    --text: #2C3E50;
+    --muted: #6B8099;
+    --white: #FFFFFF;
+    --border: #D8E4EC;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Inter',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(13,27,42,0.97); backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 5%; height:66px;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-mark {
+    width:36px; height:36px; background:var(--gold); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  }
+  .logo-text { font-family:'Fraunces',serif; font-size:1.3rem; color:white; }
+  .logo-text span { display:block; font-family:'Inter',sans-serif; font-size:0.6rem; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; font-weight:400; }
+  nav ul { list-style:none; display:flex; gap:2rem; }
+  nav ul a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.85rem; font-weight:500; transition:color 0.2s; }
+  nav ul a:hover { color:var(--gold); }
+  .nav-cta { background:var(--gold); color:var(--navy); padding:9px 22px; border-radius:6px; text-decoration:none; font-size:0.83rem; font-weight:600; transition:background 0.2s; }
+  .nav-cta:hover { background:#D4AA4C; }
+
+  /* HERO */
+  .hero {
+    min-height:100vh;
+    background:linear-gradient(160deg, #0D1B2A 0%, #1B2F45 50%, #0E2A3A 100%);
+    display:flex; align-items:center;
+    padding:100px 5% 80px; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-200px; right:-200px;
+    width:700px; height:700px; border-radius:50%;
+    border:1px solid rgba(196,154,60,0.08);
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-150px; left:-100px;
+    width:500px; height:500px; border-radius:50%;
+    background:rgba(14,124,110,0.06);
+  }
+  .hero-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; align-items:center; width:100%; position:relative; z-index:1; }
+  .hero-eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:1.5rem; }
+  .eyebrow-line { width:32px; height:2px; background:var(--gold); }
+  .eyebrow-text { font-size:0.72rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+  .hero h1 { font-family:'Fraunces',serif; font-size:clamp(2.5rem,5vw,4.2rem); color:white; line-height:1.15; margin-bottom:1.25rem; }
+  .hero h1 em { color:#7DD3C0; font-style:italic; }
+  .hero p { color:rgba(255,255,255,0.55); font-size:0.95rem; line-height:1.8; margin-bottom:2.5rem; max-width:460px; font-weight:300; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-gold { background:var(--gold); color:var(--navy); padding:13px 28px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.88rem; transition:background 0.2s, transform 0.2s; }
+  .btn-gold:hover { background:#D4AA4C; transform:translateY(-2px); }
+  .btn-outline-w { background:transparent; color:rgba(255,255,255,0.75); padding:12px 28px; border:1px solid rgba(255,255,255,0.2); border-radius:6px; text-decoration:none; font-size:0.88rem; transition:border-color 0.2s; }
+  .btn-outline-w:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* Search box */
+  .search-box { background:white; border-radius:16px; padding:2rem; box-shadow:0 24px 64px rgba(0,0,0,0.25); }
+  .search-box h3 { font-family:'Fraunces',serif; font-size:1.25rem; color:var(--dark); margin-bottom:0.3rem; }
+  .search-box p { font-size:0.78rem; color:var(--muted); margin-bottom:1.5rem; }
+  .search-tabs { display:flex; gap:0.5rem; margin-bottom:1.25rem; }
+  .stab { flex:1; padding:8px; border:1.5px solid var(--border); border-radius:6px; background:transparent; font-size:0.8rem; font-weight:500; cursor:pointer; font-family:'Inter',sans-serif; color:var(--muted); transition:all 0.2s; }
+  .stab.active, .stab:hover { background:var(--navy); color:white; border-color:var(--navy); }
+  .s-group { margin-bottom:1rem; }
+  .s-group label { display:block; font-size:0.72rem; font-weight:600; color:var(--text); margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.5px; }
+  .s-group select, .s-group input { width:100%; padding:10px 12px; border:1.5px solid var(--border); border-radius:6px; font-size:0.85rem; color:var(--text); font-family:'Inter',sans-serif; outline:none; background:white; transition:border-color 0.2s; }
+  .s-group select:focus, .s-group input:focus { border-color:var(--teal); }
+  .s-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+  .search-btn { width:100%; background:var(--teal); color:white; padding:12px; border:none; border-radius:6px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s; margin-top:0.5rem; }
+  .search-btn:hover { background:#0A6A5E; }
+
+  /* STATS */
+  .stats-bar { background:var(--teal); display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-cell { padding:1.75rem 1rem; text-align:center; border-right:1px solid rgba(255,255,255,0.1); }
+  .stat-cell:last-child { border-right:none; }
+  .stat-cell strong { display:block; font-family:'Fraunces',serif; font-size:1.9rem; color:white; }
+  .stat-cell span { font-size:0.75rem; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; }
+
+  /* SECTION BASE */
+  .sec { padding:80px 5%; }
+  .sec-hdr { margin-bottom:3rem; }
+  .sec-hdr.center { text-align:center; }
+  .sec-hdr.center .sec-sub { margin:0.75rem auto 0; }
+  .sec-tag { font-size:0.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--teal); font-weight:600; margin-bottom:0.5rem; }
+  .sec-title { font-family:'Fraunces',serif; font-size:clamp(1.8rem,2.8vw,2.6rem); color:var(--dark); line-height:1.2; }
+  .sec-title em { color:var(--teal); font-style:italic; }
+  .sec-sub { color:var(--muted); font-size:0.9rem; line-height:1.75; max-width:500px; font-weight:300; }
+
+  /* FEATURED PROPERTIES */
+  .props-section { background:white; }
+  .filter-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+  .filter-btn { padding:8px 20px; border-radius:50px; border:1.5px solid var(--border); background:transparent; font-size:0.8rem; font-weight:500; cursor:pointer; color:var(--muted); font-family:'Inter',sans-serif; transition:all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background:var(--navy); color:white; border-color:var(--navy); }
+  .props-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.75rem; }
+  .prop-card { border-radius:16px; overflow:hidden; border:1px solid var(--border); background:white; transition:transform 0.25s, box-shadow 0.25s; }
+  .prop-card:hover { transform:translateY(-5px); box-shadow:0 20px 48px rgba(13,27,42,0.1); }
+  .prop-img {
+    height:200px; display:flex; align-items:center; justify-content:center;
+    font-size:4rem; position:relative; overflow:hidden;
+  }
+  .pi1 { background:linear-gradient(135deg,#E8F4FD,#B8D9F0); }
+  .pi2 { background:linear-gradient(135deg,#E8F5F3,#B2DFDB); }
+  .pi3 { background:linear-gradient(135deg,#FBF5E6,#F0DFA8); }
+  .pi4 { background:linear-gradient(135deg,#FCE4EC,#F8BBD9); }
+  .pi5 { background:linear-gradient(135deg,#E8EAF6,#C5CAE9); }
+  .pi6 { background:linear-gradient(135deg,#E8F5E9,#C8E6C9); }
+  .prop-badge {
+    position:absolute; top:12px; left:12px; padding:5px 14px; border-radius:50px;
+    font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:1px;
+  }
+  .badge-sale { background:var(--teal); color:white; }
+  .badge-rent { background:var(--navy); color:white; }
+  .badge-new { background:var(--gold); color:var(--navy); }
+  .prop-fav {
+    position:absolute; top:12px; right:12px;
+    width:32px; height:32px; background:white; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    border:none; transition:transform 0.2s;
+  }
+  .prop-fav:hover { transform:scale(1.15); }
+  .prop-body { padding:1.25rem; }
+  .prop-price { font-family:'Fraunces',serif; font-size:1.4rem; color:var(--teal); font-weight:700; margin-bottom:0.25rem; }
+  .prop-name { font-size:1rem; font-weight:600; color:var(--dark); margin-bottom:0.2rem; }
+  .prop-loc { font-size:0.78rem; color:var(--muted); margin-bottom:1rem; display:flex; align-items:center; gap:4px; }
+  .prop-specs { display:flex; gap:1rem; margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
+  .spec-item { font-size:0.78rem; color:var(--muted); display:flex; align-items:center; gap:4px; }
+  .prop-footer { display:flex; align-items:center; justify-content:space-between; }
+  .prop-type { font-size:0.72rem; color:var(--teal); background:var(--teal-light); padding:4px 10px; border-radius:50px; font-weight:500; }
+  .prop-cta { background:var(--navy); color:white; border:none; padding:8px 18px; border-radius:6px; font-size:0.8rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s; }
+  .prop-cta:hover { background:var(--teal); }
+
+  /* WHY US */
+  .why-section { background:var(--cream); }
+  .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; max-width:1100px; margin:0 auto; }
+  .why-card { background:white; border-radius:16px; padding:2rem; border:1px solid var(--border); transition:transform 0.25s, box-shadow 0.25s; }
+  .why-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(13,27,42,0.07); }
+  .why-icon { font-size:2.25rem; margin-bottom:1rem; }
+  .why-card h3 { font-size:1rem; font-weight:600; color:var(--dark); margin-bottom:0.4rem; }
+  .why-card p { font-size:0.83rem; color:var(--muted); line-height:1.65; font-weight:300; }
+
+  /* PROCESS */
+  .process-section { background:var(--navy); }
+  .process-section .sec-tag { color:var(--gold); }
+  .process-section .sec-title { color:white; }
+  .process-section .sec-title em { color:#7DD3C0; }
+  .process-section .sec-sub { color:rgba(255,255,255,0.45); }
+  .process-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; max-width:1000px; margin:3rem auto 0; }
+  .p-step { text-align:center; }
+  .p-num {
+    width:64px; height:64px; border-radius:16px; margin:0 auto 1.25rem;
+    background:rgba(196,154,60,0.15); border:1px solid rgba(196,154,60,0.25);
+    display:flex; align-items:center; justify-content:center; font-size:1.75rem;
+  }
+  .p-step h3 { font-size:0.95rem; font-weight:600; color:white; margin-bottom:0.4rem; }
+  .p-step p { font-size:0.8rem; color:rgba(255,255,255,0.45); line-height:1.6; font-weight:300; }
+
+  /* TESTIMONIALS */
+  .reviews-section { background:white; }
+  .reviews-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; max-width:1100px; margin:0 auto; }
+  .rev-card { background:var(--cream); border:1px solid var(--border); border-radius:16px; padding:1.75rem; transition:box-shadow 0.25s; }
+  .rev-card:hover { box-shadow:0 8px 24px rgba(13,27,42,0.07); }
+  .rev-stars { color:var(--gold); font-size:0.9rem; letter-spacing:2px; margin-bottom:1rem; }
+  .rev-card blockquote { font-size:0.9rem; color:var(--text); line-height:1.75; margin-bottom:1.25rem; font-style:italic; font-weight:300; }
+  .rev-footer { display:flex; align-items:center; gap:0.75rem; }
+  .rev-av { width:38px; height:38px; border-radius:50%; background:var(--teal); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; }
+  .rev-name { font-size:0.875rem; font-weight:600; color:var(--dark); }
+  .rev-sub { font-size:0.75rem; color:var(--muted); }
+  .prop-tag-sm { display:inline-block; background:var(--teal-light); color:var(--teal); font-size:0.68rem; font-weight:600; padding:2px 8px; border-radius:50px; margin-top:3px; }
+
+  /* CONTACT */
+  .contact-section { background:var(--cream); }
+  .contact-inner { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start; }
+  .contact-left h2 { font-family:'Fraunces',serif; font-size:2.2rem; color:var(--dark); margin-bottom:0.75rem; }
+  .contact-left h2 em { color:var(--teal); }
+  .contact-left p { color:var(--muted); font-size:0.88rem; line-height:1.8; margin-bottom:2rem; font-weight:300; }
+  .cinfo-row { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; }
+  .cinfo-icon { width:44px; height:44px; min-width:44px; background:var(--teal-light); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+  .cinfo-row strong { display:block; font-size:0.875rem; font-weight:600; color:var(--dark); margin-bottom:0.2rem; }
+  .cinfo-row p { font-size:0.83rem; color:var(--muted); line-height:1.5; font-weight:300; }
+  .wa-cta { display:inline-block; background:var(--teal); color:white; padding:13px 28px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.88rem; margin-top:1.25rem; transition:background 0.2s, transform 0.2s; }
+  .wa-cta:hover { background:#0A6A5E; transform:translateY(-2px); }
+  .contact-card { background:white; border-radius:18px; overflow:hidden; border:1px solid var(--border); }
+  .contact-card-top { background:var(--navy); padding:2rem; }
+  .contact-card-top h3 { font-family:'Fraunces',serif; color:white; font-size:1.3rem; margin-bottom:0.3rem; }
+  .contact-card-top p { font-size:0.82rem; color:rgba(255,255,255,0.5); font-weight:300; }
+  .contact-card-body { padding:1.75rem; }
+  .agent-row { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+  .agent-av { width:52px; height:52px; border-radius:12px; background:var(--teal-light); display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+  .agent-info strong { display:block; font-size:0.9rem; font-weight:600; color:var(--dark); }
+  .agent-info span { font-size:0.78rem; color:var(--muted); }
+  .agent-rating { font-size:0.75rem; color:var(--gold); font-weight:600; }
+  .quick-links { display:flex; flex-direction:column; gap:0.75rem; }
+  .quick-link { display:flex; align-items:center; gap:0.75rem; padding:10px 14px; background:var(--cream); border-radius:8px; text-decoration:none; font-size:0.83rem; color:var(--text); font-weight:500; transition:background 0.2s; border:none; cursor:pointer; font-family:'Inter',sans-serif; width:100%; text-align:left; }
+  .quick-link:hover { background:var(--teal-light); color:var(--teal); }
+
+  /* FOOTER */
+  footer { background:var(--navy); color:rgba(255,255,255,0.4); text-align:center; padding:2.5rem 5%; }
+  .footer-logo { font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold); margin-bottom:0.5rem; }
+  footer p { font-size:0.82rem; line-height:1.9; }
+  .footer-links { display:flex; gap:2rem; justify-content:center; margin:0.75rem 0; flex-wrap:wrap; }
+  .footer-links a { color:rgba(255,255,255,0.35); text-decoration:none; font-size:0.78rem; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--gold); }
+
+  /* WA FLOAT */
+  .wa-float { position:fixed; bottom:24px; right:24px; z-index:200; background:#25D366; color:white; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,0.45); animation:wap 2s infinite; }
+  @keyframes wap { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.7)} }
+
+  @media(max-width:768px){
+    nav ul{display:none}
+    .hero-inner{grid-template-columns:1fr}
+    .search-box{display:none}
+    .stats-bar{grid-template-columns:repeat(2,1fr)}
+    .contact-inner{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">🏠</div>
+    <div class="logo-text">PropLuck Homes<span>Lucknow Real Estate</span></div>
+  </div>
+  <ul>
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">📞 Talk to Agent</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Lucknow's Trusted Property Partner</span></div>
+      <h1>Find Your<br>Dream <em>Home</em><br>in Lucknow</h1>
+      <p>Buy, sell, or rent residential & commercial properties across Lucknow. 500+ verified listings, expert guidance, and zero brokerage surprises.</p>
+      <div class="hero-btns">
+        <a href="#properties" class="btn-gold">🏠 Browse Properties</a>
+        <a href="#contact" class="btn-outline-w">Talk to Agent →</a>
+      </div>
+    </div>
+    <div class="search-box">
+      <h3>Search Property</h3>
+      <p>Find your perfect home in minutes</p>
+      <div class="search-tabs">
+        <button class="stab active" onclick="setTab(this)">Buy</button>
+        <button class="stab" onclick="setTab(this)">Rent</button>
+        <button class="stab" onclick="setTab(this)">Plot</button>
+        <button class="stab" onclick="setTab(this)">Commercial</button>
+      </div>
+      <div class="s-group">
+        <label>Location</label>
+        <select><option>Gomti Nagar</option><option>Hazratganj</option><option>Indira Nagar</option><option>Aliganj</option><option>Kanpur Road</option><option>Sultanpur Road</option></select>
+      </div>
+      <div class="s-row">
+        <div class="s-group">
+          <label>Property Type</label>
+          <select><option>Apartment</option><option>Villa</option><option>Plot</option><option>Builder Floor</option></select>
+        </div>
+        <div class="s-group">
+          <label>BHK</label>
+          <select><option>Any</option><option>1 BHK</option><option>2 BHK</option><option>3 BHK</option><option>4+ BHK</option></select>
+        </div>
+      </div>
+      <div class="s-group">
+        <label>Budget (₹)</label>
+        <select><option>Upto ₹30 Lakh</option><option>₹30–60 Lakh</option><option>₹60L–1 Crore</option><option>₹1–2 Crore</option><option>2 Crore+</option></select>
+      </div>
+      <button class="search-btn" onclick="alert('🔍 Searching properties...\n\nHum aapke liye best options nikalenge.\nWhatsApp: +91 98765 43210')">🔍 Search Properties</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-cell"><strong>500+</strong><span>Properties Listed</span></div>
+  <div class="stat-cell"><strong>1200+</strong><span>Happy Families</span></div>
+  <div class="stat-cell"><strong>12+</strong><span>Years Experience</span></div>
+  <div class="stat-cell"><strong>4.8★</strong><span>Client Rating</span></div>
+</div>
+
+<!-- FEATURED PROPERTIES -->
+<section class="props-section sec" id="properties">
+  <div class="sec-hdr">
+    <div class="sec-tag">Featured Listings</div>
+    <h2 class="sec-title">Latest <em>Properties</em></h2>
+    <p class="sec-sub">Handpicked, verified listings in Lucknow's most sought-after localities.</p>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="setFilter(this)">All</button>
+    <button class="filter-btn" onclick="setFilter(this)">Apartments</button>
+    <button class="filter-btn" onclick="setFilter(this)">Villas</button>
+    <button class="filter-btn" onclick="setFilter(this)">Plots</button>
+    <button class="filter-btn" onclick="setFilter(this)">Commercial</button>
+  </div>
+  <div class="props-grid">
+    <div class="prop-card">
+      <div class="prop-img pi1">
+        <span class="prop-badge badge-new">New Launch</span>
+        <button class="prop-fav">🤍</button>
+        🏢
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹65 Lakh</div>
+        <div class="prop-name">Skyline Residency</div>
+        <div class="prop-loc">📍 Gomti Nagar, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">🛏 3 BHK</span>
+          <span class="spec-item">🚿 2 Bath</span>
+          <span class="spec-item">📐 1450 sq.ft</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Ready to Move</span>
+          <button class="prop-cta" onclick="alert('Interested in Skyline Residency?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-img pi2">
+        <span class="prop-badge badge-sale">For Sale</span>
+        <button class="prop-fav">🤍</button>
+        🏘
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹1.20 Crore</div>
+        <div class="prop-name">Green Valley Villa</div>
+        <div class="prop-loc">📍 Sultanpur Road, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">🛏 4 BHK</span>
+          <span class="spec-item">🚿 3 Bath</span>
+          <span class="spec-item">📐 2800 sq.ft</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Independent Villa</span>
+          <button class="prop-cta" onclick="alert('Interested in Green Valley Villa?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-img pi3">
+        <span class="prop-badge badge-rent">For Rent</span>
+        <button class="prop-fav">🤍</button>
+        🏠
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹22,000/mo</div>
+        <div class="prop-name">Sunrise Apartment</div>
+        <div class="prop-loc">📍 Indira Nagar, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">🛏 2 BHK</span>
+          <span class="spec-item">🚿 2 Bath</span>
+          <span class="spec-item">📐 1100 sq.ft</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Semi-Furnished</span>
+          <button class="prop-cta" onclick="alert('Interested in Sunrise Apartment?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-img pi4">
+        <span class="prop-badge badge-sale">For Sale</span>
+        <button class="prop-fav">🤍</button>
+        🏗
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹42 Lakh</div>
+        <div class="prop-name">Plot — Sector 14</div>
+        <div class="prop-loc">📍 Aliganj, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">📐 200 sq.yd</span>
+          <span class="spec-item">🏗 Corner Plot</span>
+          <span class="spec-item">✅ RERA</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Residential Plot</span>
+          <button class="prop-cta" onclick="alert('Interested in Sector 14 Plot?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-img pi5">
+        <span class="prop-badge badge-rent">For Rent</span>
+        <button class="prop-fav">🤍</button>
+        🏬
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹55,000/mo</div>
+        <div class="prop-name">Prime Commercial Shop</div>
+        <div class="prop-loc">📍 Hazratganj, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">📐 800 sq.ft</span>
+          <span class="spec-item">🚗 Parking</span>
+          <span class="spec-item">🏢 Ground Floor</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Commercial</span>
+          <button class="prop-cta" onclick="alert('Interested in Prime Shop?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-img pi6">
+        <span class="prop-badge badge-new">New</span>
+        <button class="prop-fav">🤍</button>
+        🏡
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">₹85 Lakh</div>
+        <div class="prop-name">Lakeview Heights</div>
+        <div class="prop-loc">📍 Kanpur Road, Lucknow</div>
+        <div class="prop-specs">
+          <span class="spec-item">🛏 3 BHK</span>
+          <span class="spec-item">🚿 2 Bath</span>
+          <span class="spec-item">📐 1650 sq.ft</span>
+        </div>
+        <div class="prop-footer">
+          <span class="prop-type">Under Construction</span>
+          <button class="prop-cta" onclick="alert('Interested in Lakeview Heights?\nWhatsApp: +91 98765 43210')">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section sec" id="why">
+  <div class="sec-hdr center">
+    <div class="sec-tag">Why Choose Us</div>
+    <h2 class="sec-title">The <em>PropLuck</em> Advantage</h2>
+    <p class="sec-sub">We make property buying, selling, and renting simple, transparent, and stress-free.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">✅</div><h3>RERA Verified Listings</h3><p>Every property on our platform is RERA registered and legally verified — no fraud, no surprises.</p></div>
+    <div class="why-card"><div class="why-icon">💰</div><h3>Zero Hidden Charges</h3><p>Transparent pricing. What you see is what you pay. No surprise fees at any stage of the deal.</p></div>
+    <div class="why-card"><div class="why-icon">👨‍💼</div><h3>Expert Local Agents</h3><p>Our agents know every locality in Lucknow — giving you insights no website algorithm can.</p></div>
+    <div class="why-card"><div class="why-icon">🏦</div><h3>Home Loan Assistance</h3><p>We help you get the best home loan rates from top banks — SBI, HDFC, ICICI & more.</p></div>
+    <div class="why-card"><div class="why-icon">📋</div><h3>Legal & Registration Help</h3><p>From registry to sale deed — our team manages all paperwork so you don't have to worry.</p></div>
+    <div class="why-card"><div class="why-icon">🕐</div><h3>Post-Sale Support</h3><p>We stay with you even after the deal is done — mutation, possession, society registration.</p></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section sec" id="process">
+  <div class="sec-hdr center">
+    <div class="sec-tag">How It Works</div>
+    <h2 class="sec-title">Buy Your Home in <em>5 Simple Steps</em></h2>
+    <p class="sec-sub">We guide you through every step — from searching to getting keys in your hand.</p>
+  </div>
+  <div class="process-grid">
+    <div class="p-step"><div class="p-num">🔍</div><h3>Share Requirements</h3><p>Tell us your budget, location & type of property via WhatsApp or call</p></div>
+    <div class="p-step"><div class="p-num">🏠</div><h3>Site Visits</h3><p>We arrange free site visits at your convenience — no pressure, just options</p></div>
+    <div class="p-step"><div class="p-num">🤝</div><h3>Negotiation</h3><p>Our experts negotiate the best price on your behalf with the seller</p></div>
+    <div class="p-step"><div class="p-num">📋</div><h3>Legal & Loan</h3><p>We handle all documentation, registry, and home loan processing for you</p></div>
+    <div class="p-step"><div class="p-num">🗝</div><h3>Get Your Keys!</h3><p>Possession handover done — welcome to your new home!</p></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section sec">
+  <div class="sec-hdr center">
+    <div class="sec-tag">Client Stories</div>
+    <h2 class="sec-title">Trusted Across <em>Lucknow</em></h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <blockquote>"PropLuck helped us find our dream 3 BHK in Gomti Nagar within 2 weeks. The agent was extremely helpful — arranged multiple site visits and even helped with home loan paperwork. Highly recommend!"</blockquote>
+      <div class="rev-footer">
+        <div class="rev-av">AV</div>
+        <div>
+          <div class="rev-name">Ashok Verma</div>
+          <div class="rev-sub">Bought 3BHK · Gomti Nagar</div>
+          <span class="prop-tag-sm">✓ Verified Buyer</span>
+        </div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <blockquote>"Sold my property at the best price in just 3 weeks — no running around, no stress. Their team handled everything from listing to registry. Transparent process throughout. Very trustworthy."</blockquote>
+      <div class="rev-footer">
+        <div class="rev-av">RM</div>
+        <div>
+          <div class="rev-name">Renu Mishra</div>
+          <div class="rev-sub">Sold Property · Indira Nagar</div>
+          <span class="prop-tag-sm">✓ Verified Seller</span>
+        </div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <blockquote>"Looking for a rental flat in Lucknow was a nightmare until I contacted PropLuck. Got a great 2 BHK in Aliganj with zero brokerage in just 4 days. The team is super responsive and honest."</blockquote>
+      <div class="rev-footer">
+        <div class="rev-av">SK</div>
+        <div>
+          <div class="rev-name">Shubham Kumar</div>
+          <div class="rev-sub">Rented 2BHK · Aliganj</div>
+          <span class="prop-tag-sm">✓ Verified Tenant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section sec" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="sec-tag">Get in Touch</div>
+      <h2>Let's Find Your<br><em>Perfect Property</em></h2>
+      <p>Whether you want to buy, sell, or rent — our expert agents are ready to help. No obligation, just honest advice.</p>
+      <div class="cinfo-row">
+        <div class="cinfo-icon">📍</div>
+        <div><strong>Office Address</strong><p>23, Viram Khand, Gomti Nagar,<br>Lucknow, Uttar Pradesh — 226010</p></div>
+      </div>
+      <div class="cinfo-row">
+        <div class="cinfo-icon">📞</div>
+        <div><strong>Call / WhatsApp</strong><p>+91 98765 43210<br>+91 75213 86420</p></div>
+      </div>
+      <div class="cinfo-row">
+        <div class="cinfo-icon">🕐</div>
+        <div><strong>Office Hours</strong><p>Mon–Sat: 9:00 AM – 7:00 PM<br>Sunday: 10:00 AM – 3:00 PM</p></div>
+      </div>
+      <a href="https://wa.me/919876543210" class="wa-cta">💬 WhatsApp Us Now</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <h3>Talk to an Agent</h3>
+        <p>Our senior agents are available for free consultation</p>
+      </div>
+      <div class="contact-card-body">
+        <div class="agent-row">
+          <div class="agent-av">👨‍💼</div>
+          <div class="agent-info">
+            <strong>Vivek Sharma</strong>
+            <span>Senior Property Consultant</span><br>
+            <span class="agent-rating">★★★★★ &nbsp;4.9 · 200+ deals closed</span>
+          </div>
+        </div>
+        <div class="quick-links">
+          <button class="quick-link" onclick="alert('Calling Vivek Sharma...\n+91 98765 43210')">📞 &nbsp; Call Vivek Now</button>
+          <button class="quick-link" onclick="alert('Opening WhatsApp...\n+91 98765 43210')">💬 &nbsp; WhatsApp for Free Consultation</button>
+          <button class="quick-link" onclick="alert('Site visit scheduled!\nOur agent will call you to confirm.')">🏠 &nbsp; Schedule a Free Site Visit</button>
+          <button class="quick-link" onclick="alert('Home loan enquiry received!\nOur finance team will call you.')">🏦 &nbsp; Enquire About Home Loan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">PropLuck Homes</div>
+  <div class="footer-links">
+    <a href="#properties">Properties</a>
+    <a href="#why">Why Us</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p>📍 Gomti Nagar, Lucknow &nbsp;|&nbsp; 📞 +91 98765 43210 &nbsp;|&nbsp; RERA Registered Agency</p>
+  <p style="margin-top:0.5rem;font-size:0.75rem;opacity:0.4;">© 2025 PropLuck Homes · All rights reserved · Website by Shivam Bharti — shivrajventures.github.io</p>
+</footer>
+
+<a href="https://wa.me/919876543210" class="wa-float">💬</a>
+
+<script>
+  function setTab(el) {
+    document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function setFilter(el) {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+  }
+  document.querySelectorAll('.prop-fav').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      this.textContent = this.textContent==='🤍' ? '❤️' : '🤍';
+    });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+</script>
+</body>
+</html>
